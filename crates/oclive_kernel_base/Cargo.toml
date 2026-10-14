@@ -3,6 +3,7 @@ name = "oclive_kernel_base"
 version = "0.1.0"
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "OCLive six-slot Base contracts and minimal logical role validation"
 publish = false
 

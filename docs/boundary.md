@@ -38,7 +38,7 @@ Library tests prove the behavior they actually exercise; the Host tests prove th
 There is no real model, network, database, tool effect, media playback, crash-recovery or hardware acceptance.
 No production TTS, all-platform resource guarantee or stable binary ABI is claimed.
 
-The extraction is currently a separate source candidate. The original workspace has not migrated its
-public definitions to this package yet. Until that migration is completed, this is **not** a claim that
-two independently edited copies are the permanent architecture. The intended migration is one defining
-crate plus compatibility re-exports at old import paths; see [extraction](extraction.md).
+This repository is the defining source for the extracted symbols. Original-workspace compatibility is
+verified separately: the transition uses this crate plus re-exports at old import paths, rather than
+permanently maintaining two independent definitions. This repository's CI does not certify that a
+downstream migration has been merged or that a product has passed acceptance; see [extraction](extraction.md).

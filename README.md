@@ -3,17 +3,23 @@
 一个独立的 Rust 公共库：六槽 Base、请求与失败表达，以及最小逻辑角色定义和校验。
 配套一个很小的终端 Host，展示作者如何绑定自己的实现并调用这些接口。
 
-这是从 OCLive 已落地公共 API 提取的本地交付候选。原参考工程尚未切换到本仓依赖，package 发布关闭；不是新增的回合执行引擎。
+这是从 OCLive 已落地公共 API 提取的独立源码工程，package 发布关闭；不是新增的回合执行引擎。
+原参考工程的兼容迁移单独验收，本仓测试不代表它已合入或通过发行版验收。
 来源和兼容迁移状态见 [extraction](docs/extraction.md)，责任和未覆盖范围见 [boundary](docs/boundary.md)。
 
 ## 运行
 
-在本仓目录执行；首次运行需要 Cargo 能取得锁文件中的依赖，缓存完备时可以添加 `--offline`：
+取得源码后，在本仓目录执行；首次运行需要 Cargo 能取得锁文件中的依赖，缓存完备时可以添加 `--offline`：
 
 ```sh
+git clone https://github.com/linkaiheng2233-cyber/oclive-kernel.git
+cd oclive-kernel
 cargo test --locked --workspace
 cargo run --locked -p oclive_minimal_host
 ```
+
+作为另一个工程的依赖时，使用 `oclive_kernel_base`，并将 Git `rev` 固定为审阅过的完整提交 SHA。
+旧 OCLive 的兼容入口仍由原工程维护；不要将本机绝对路径当作交付依赖。
 
 应看到 Base 与实现分开列出，Memory/Prompt/LLM 各调用一次，Memory 选中两条材料：
 

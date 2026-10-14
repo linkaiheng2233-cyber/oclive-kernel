@@ -5,6 +5,7 @@ resolver = "2"
 [workspace.package]
 edition = "2021"
 license = "Apache-2.0"
+repository = "https://github.com/linkaiheng2233-cyber/oclive-kernel"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"

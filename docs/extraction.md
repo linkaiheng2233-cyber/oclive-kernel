@@ -1,6 +1,8 @@
 # Extraction record
 
-Status: **Locally verified** extraction candidate; remote repository/package publication and original-workspace migration are not completed.
+Source distribution: [oclive-kernel](https://github.com/linkaiheng2233-cyber/oclive-kernel).
+Package publication remains disabled. Remote CI conclusions must be checked for the actual target SHA;
+the initial local evidence below does not certify remote execution or downstream migration.
 Controller implementation and semantic self-review: `independent=false`.
 
 The maintainer selected: extract the existing public library plus a minimal Host, retain the boundary
@@ -44,8 +46,13 @@ The intended single-source transition is:
 5. Freeze the original-workspace migration separately; retain historical SDK tags and source commits.
 
 The new package must not depend back on those old crates. Copying whole old crates, or permanently editing
-two independent Base/type definitions, would defeat this extraction. This local candidate does not yet
-claim that the above downstream steps have happened.
+two independent Base/type definitions, would defeat this extraction. The first local extraction does not
+claim that those downstream steps had happened.
+
+On 2026-10-14, the original workspace prepared the re-exports and type-identity regressions in local
+commit `e99feb72bc568e65c3113d4a603f714e63fd3d62`, using a temporary development path. Its source transition
+to an immutable Git revision and its final acceptance are separate work; the temporary path is not a
+distribution requirement. The historical SDK and extraction checkpoints remain unchanged.
 
 ## Measurement
 
