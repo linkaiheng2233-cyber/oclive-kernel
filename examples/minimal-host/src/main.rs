@@ -1,13 +1,14 @@
 //! An explicit, deterministic Host call sequence; no shared runtime or reference Host.
 
+#[path = "../../common/demo_modules.rs"]
 mod modules;
 
 use std::cell::Cell;
 
 use modules::{DemoLlm, LiteralMemory, LiteralPrompt};
 use oclive_kernel_base::{
-    validate_minimal_role_definition, BaseCallError, LlmBase, LlmBaseRequest, MemoryBase,
-    MemoryBaseRequest, MinimalRoleDefinition, PromptBase, PromptBaseRequest,
+    validate_character_profile_definition, BaseCallError, CharacterProfileDefinition, LlmBase,
+    LlmBaseRequest, MemoryBase, MemoryBaseRequest, PromptBase, PromptBaseRequest,
 };
 
 #[derive(Debug)]
@@ -36,13 +37,13 @@ struct HostOutput {
 }
 
 async fn run_host(
-    role: &MinimalRoleDefinition,
+    role: &CharacterProfileDefinition,
     request: MemoryBaseRequest<'_>,
     memory: &dyn MemoryBase,
     prompt: &dyn PromptBase,
     llm: &dyn LlmBase,
 ) -> Result<HostOutput, HostError> {
-    validate_minimal_role_definition(role).map_err(HostError::InvalidRole)?;
+    validate_character_profile_definition(role).map_err(HostError::InvalidRole)?;
     let selected = memory
         .retrieve(request)
         .await
@@ -63,8 +64,8 @@ async fn run_host(
     Ok(HostOutput { selected, reply })
 }
 
-fn sample_role() -> MinimalRoleDefinition {
-    MinimalRoleDefinition {
+fn sample_role() -> CharacterProfileDefinition {
+    CharacterProfileDefinition {
         persona_prompt: "A careful guide who preserves uncertainty.".into(),
         visual_assets: vec!["host-owned:portrait".into()],
     }

@@ -1,4 +1,4 @@
-//! Example implementations owned by this Host, not by the public Kernel library.
+//! Private demo implementations shared by the example Hosts, not by the Kernel library.
 
 use std::cell::Cell;
 

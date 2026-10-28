@@ -1,4 +1,8 @@
-//! Shared logical role content, independent of distro pack formats and host assembly.
+//! Character conformance profile, independent of distro pack formats and host assembly.
+//!
+//! Enabled by default through `character-profile`. A profile carries authored persona
+//! text and visual references: seven references are recommended, while one is the
+//! validated minimum. This profile adds no required slot or execution workflow.
 //!
 //! Asset strings are opaque references supplied by an adapter. This module performs
 //! no I/O: passing validation does not prove that a referenced asset exists, is safe
@@ -7,20 +11,20 @@
 
 use serde::{Deserialize, Serialize};
 
-/// Minimum authored role content: a persona prompt and at least one visual asset reference.
+/// Minimum character-profile content: persona text and at least one visual reference.
 ///
 /// Relations, identity/version envelopes, backend bindings, and visual slot semantics
 /// belong to adapters or distros. Unknown JSON fields are ignored, not retained or
 /// interpreted; this type is not a lossless editor model for richer product packs.
 /// Deserialization alone does not validate non-empty content; use
-/// [`parse_minimal_role_definition`] or [`validate_minimal_role_definition`].
+/// [`parse_character_profile_definition`] or [`validate_character_profile_definition`].
 /// Consumers import this same type from the extracted crate root.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct MinimalRoleDefinition {
+pub struct CharacterProfileDefinition {
     /// Non-empty authored persona prose, preserved verbatim.
     pub persona_prompt: String,
     /// One or more non-empty adapter-owned asset references, preserved in input order.
-    /// No filename, URI scheme, seven-image set, or emotion label is imposed here.
+    /// Seven are recommended; no filename, URI scheme or emotion label is imposed.
     pub visual_assets: Vec<String>,
 }
 
@@ -32,15 +36,17 @@ pub struct MinimalRoleDefinition {
 /// blank asset reference. Asset existence and media validity are outside this check.
 ///
 /// ```
-/// use oclive_kernel_base::{MinimalRoleDefinition, validate_minimal_role_definition};
+/// use oclive_kernel_base::{CharacterProfileDefinition, validate_character_profile_definition};
 ///
-/// let role = MinimalRoleDefinition {
+/// let role = CharacterProfileDefinition {
 ///     persona_prompt: "A curious guide.".into(),
 ///     visual_assets: vec!["adapter-owned-portrait".into()],
 /// };
-/// assert!(validate_minimal_role_definition(&role).is_ok());
+/// assert!(validate_character_profile_definition(&role).is_ok());
 /// ```
-pub fn validate_minimal_role_definition(role: &MinimalRoleDefinition) -> Result<(), Vec<String>> {
+pub fn validate_character_profile_definition(
+    role: &CharacterProfileDefinition,
+) -> Result<(), Vec<String>> {
     let mut errors = Vec::new();
     if role.persona_prompt.trim().is_empty() {
         errors.push("minimal role: persona_prompt must not be blank".into());
@@ -71,8 +77,10 @@ pub fn validate_minimal_role_definition(role: &MinimalRoleDefinition) -> Result<
 ///
 /// Returns diagnostics for invalid JSON, missing/wrongly typed required fields, or
 /// invalid logical content. Diagnostics do not include persona or asset values.
-pub fn parse_minimal_role_definition(raw: &str) -> Result<MinimalRoleDefinition, Vec<String>> {
-    let role: MinimalRoleDefinition = serde_json::from_str(raw).map_err(|error| {
+pub fn parse_character_profile_definition(
+    raw: &str,
+) -> Result<CharacterProfileDefinition, Vec<String>> {
+    let role: CharacterProfileDefinition = serde_json::from_str(raw).map_err(|error| {
         vec![format!(
             "minimal role: invalid JSON projection at line {}, column {} ({:?})",
             error.line(),
@@ -80,9 +88,16 @@ pub fn parse_minimal_role_definition(raw: &str) -> Result<MinimalRoleDefinition,
             error.classify()
         )]
     })?;
-    validate_minimal_role_definition(&role)?;
+    validate_character_profile_definition(&role)?;
     Ok(role)
 }
+
+/// Legacy parser alias. Diagnostic wording is retained for existing consumers.
+pub use parse_character_profile_definition as parse_minimal_role_definition;
+/// Legacy validator alias. Rules are shared with the canonical entry point.
+pub use validate_character_profile_definition as validate_minimal_role_definition;
+/// Legacy type alias; identical data/serde representation, not a wrapper.
+pub use CharacterProfileDefinition as MinimalRoleDefinition;
 
 #[cfg(test)]
 #[allow(clippy::unwrap_used)]

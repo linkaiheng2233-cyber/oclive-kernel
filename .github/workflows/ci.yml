@@ -22,6 +22,14 @@ jobs:
           components: clippy,rustfmt
       - run: cargo test --locked --workspace
       - run: cargo test --locked --workspace --doc
+      - run: cargo test --locked -p oclive_kernel_base --no-default-features
+      - run: cargo test --locked -p oclive_kernel_base --no-default-features --doc
+      - run: cargo test --locked -p oclive_kernel_base --no-default-features --features character-profile
+      - run: cargo test --locked -p oclive_non_role_host
       - run: cargo clippy --locked --workspace --all-targets -- -D warnings
+      - run: cargo clippy --locked -p oclive_kernel_base --no-default-features --all-targets -- -D warnings
+      - run: cargo clippy --locked -p oclive_non_role_host --all-targets -- -D warnings
       - run: cargo fmt --all -- --check
       - run: cargo run --locked -p oclive_minimal_host
+      - run: cargo run --locked -p oclive_non_role_host
+      - run: cargo tree --locked -p oclive_non_role_host --edges normal,build,features

@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/oclive_kernel_base", "examples/minimal-host"]
+members = ["crates/oclive_kernel_base", "examples/minimal-host", "examples/non-role-host"]
 resolver = "2"
 
 [workspace.package]
