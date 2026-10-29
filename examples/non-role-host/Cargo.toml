@@ -13,3 +13,7 @@ workspace = true
 [dependencies]
 oclive_kernel_base = { path = "../../crates/oclive_kernel_base", default-features = false }
 futures-lite = "2.6"
+
+[dev-dependencies]
+# Only the local-tokio example uses this runtime; it is not a Kernel dependency.
+tokio = { version = "=1.53.3", default-features = false, features = ["rt"] }
