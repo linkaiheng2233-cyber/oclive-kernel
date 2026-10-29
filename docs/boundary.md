@@ -26,6 +26,10 @@ The local boxed future does not require `Send`, `Sync` or `'static`. Its executo
 Dropping a future does not prove physical cancellation, rollback or safe retry. A capability return value,
 empty or otherwise, is not an invocation terminal state or proof of product success.
 
+`BaseCallError.detail` is caller-supplied human-readable text; its `Display` includes a nonempty
+detail verbatim. A Host must redact that text where necessary before exposing errors or logs.
+The profile parser's input-omitting diagnostics are not a library-wide redaction engine.
+
 Applicable purpose, dependency, eligibility and invocation cutoff constraints remain responsibilities
 under the existing specification. They are not a newly implemented centralized enforcement engine here.
 The example visibly preserves the dependency it chooses: generation uses the successful Prompt result;
@@ -74,6 +78,9 @@ With the profile disabled, both new and legacy profile imports are absent. Dedic
 doctests check those import boundaries; the unchanged Base fixture and a running non-character
 example check that core calls still work. This separation does not claim `no_std`, a stable binary
 ABI, or a complete application without its own Host implementations.
+
+Host execution examples and task-spawning conditions are in [local futures](local-futures.md).
+That material chooses a runtime only for an example; it adds no Base bound or execution obligation.
 
 ## Acceptance and maintenance
 

@@ -26,10 +26,20 @@ jobs:
       - run: cargo test --locked -p oclive_kernel_base --no-default-features --doc
       - run: cargo test --locked -p oclive_kernel_base --no-default-features --features character-profile
       - run: cargo test --locked -p oclive_non_role_host
+      - run: cargo test --locked -p oclive_non_role_host --example local-tokio
       - run: cargo clippy --locked --workspace --all-targets -- -D warnings
       - run: cargo clippy --locked -p oclive_kernel_base --no-default-features --all-targets -- -D warnings
       - run: cargo clippy --locked -p oclive_non_role_host --all-targets -- -D warnings
       - run: cargo fmt --all -- --check
+      - name: Build default API documentation
+        run: cargo doc --locked -p oclive_kernel_base --no-deps
+        env:
+          RUSTDOCFLAGS: "-D warnings"
+      - name: Build Base-only API documentation
+        run: cargo doc --locked -p oclive_kernel_base --no-default-features --no-deps
+        env:
+          RUSTDOCFLAGS: "-D warnings"
       - run: cargo run --locked -p oclive_minimal_host
       - run: cargo run --locked -p oclive_non_role_host
+      - run: cargo run --locked -p oclive_non_role_host --example local-tokio
       - run: cargo tree --locked -p oclive_non_role_host --edges normal,build,features

@@ -1,0 +1,23 @@
+name: Dependency audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 2 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # same pin as ci.yml
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # same pin as ci.yml
+        with:
+          toolchain: 1.97.1
+      - name: Install the pinned audit tool
+        run: cargo install cargo-audit --version 0.22.2 --locked
+      - name: Fetch advisories and audit the source lockfile
+        run: cargo audit --deny warnings

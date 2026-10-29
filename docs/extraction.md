@@ -71,6 +71,9 @@ definitions are not remote-CI evidence. No new tag, package publication or insta
 
 ## Planned downstream migration
 
+The steps in this section describe the original extraction's transition plan; the dated profile
+section above records the later inspected consumer pin and isolated compatibility check.
+
 The source package is named `oclive_kernel_base`, with an initial extraction version of `0.1.0`.
 `publish = false` remains until distribution and compatibility have been frozen.
 
