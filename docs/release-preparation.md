@@ -1,7 +1,8 @@
 # Source-preview release preparation
 
-This is a plan and text template, not an executed release. The current package manifests remain at
-`0.1.0` with `publish = false`; changes in [CHANGELOG](../CHANGELOG.md) remain Unreleased.
+This checklist and text template do not prove publication. The three package manifests share
+`0.1.0-preview.1` with `publish = false`; [CHANGELOG](../CHANGELOG.md) records the prepared source preview.
+The authoritative publication record is the exact tag/commit and GitHub prerelease with its check URLs.
 Historical checkpoint tags must keep their existing targets.
 
 ## Before a distribution is announced
@@ -14,9 +15,8 @@ Historical checkpoint tags must keep their existing targets.
    Verify the two OS jobs and strict default/off docs; record the separately run dependency audit and
    advisory-fetch result. A parent SHA's badge is insufficient. Do not turn a failed advisory fetch into a pass.
 4. Confirm that About/topics describe code a visitor can actually obtain. Only then apply the metadata.
-5. The planned source-preview label is `v0.1.0-preview.1`; no tag or release is created by this plan.
-   Keep its relationship to manifest versions explicit before creating a distribution.
-   If a matching package-version policy is selected, change and verify the manifests/lock before freezing.
+5. Use `v0.1.0-preview.1` for the source preview, matching package version `0.1.0-preview.1`.
+   Verify manifests/lock before freezing; the label in this plan does not create the tag or release.
    Do not force a `0.2.0` bump solely for the canonical rename that preserves source aliases.
 6. Review tag target and release text before creation. Mark a preview as prerelease. Do not publish to
    crates.io, change historical tags, or migrate original OCLive's immutable dependency pin as a side effect.

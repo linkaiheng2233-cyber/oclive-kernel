@@ -7,6 +7,8 @@ Extracted from OCLive's implemented public surface, this source library provides
 requests, explicit call failures and a default-on optional character conformance profile.
 It owns no Host state, scheduler, storage, transport or model adapter. Package publication is disabled.
 
+Current source preview: **0.1.0-preview.1**. Included changes are listed in the [changelog](CHANGELOG.md).
+
 ## Try the two Hosts
 
 The contributor toolchain is pinned to **Rust 1.97.1**. This is a verified toolchain, not a claim

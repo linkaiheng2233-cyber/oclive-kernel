@@ -5,6 +5,14 @@ a tag, GitHub Release or claim of remote CI success; verify the actual distribut
 
 ## Unreleased
 
+No additional changes are queued beyond the source preview below.
+
+## 0.1.0-preview.1 — 2026-10-29
+
+Prepared source-preview version. The tag, GitHub prerelease and exact-SHA remote checks are separate
+publication records; this source file alone does not establish their completion. All three workspace
+packages use this version and remain `publish = false`.
+
 ### Added
 
 - Default-on `character-profile` in the same library, with canonical `character_profile` module,

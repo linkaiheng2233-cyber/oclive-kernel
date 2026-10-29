@@ -3,6 +3,7 @@ members = ["crates/oclive_kernel_base", "examples/minimal-host", "examples/non-r
 resolver = "2"
 
 [workspace.package]
+version = "0.1.0-preview.1"
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/linkaiheng2233-cyber/oclive-kernel"

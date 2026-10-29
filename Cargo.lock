@@ -47,7 +47,7 @@ checksum = "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98"
 
 [[package]]
 name = "oclive_kernel_base"
-version = "0.1.0"
+version = "0.1.0-preview.1"
 dependencies = [
  "serde",
  "serde_json",
@@ -55,7 +55,7 @@ dependencies = [
 
 [[package]]
 name = "oclive_minimal_host"
-version = "0.1.0"
+version = "0.1.0-preview.1"
 dependencies = [
  "futures-lite",
  "oclive_kernel_base",
@@ -63,7 +63,7 @@ dependencies = [
 
 [[package]]
 name = "oclive_non_role_host"
-version = "0.1.0"
+version = "0.1.0-preview.1"
 dependencies = [
  "futures-lite",
  "oclive_kernel_base",

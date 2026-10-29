@@ -12,6 +12,8 @@
 Host 选择能力实现、组织材料并驱动调用；内核不携带 Host 状态、调度器、数据库、网络或模型适配器。
 package 发布保持关闭，来源及主仓兼容记录见 [extraction](docs/extraction.md)。
 
+当前源码预览版本为 **0.1.0-preview.1**，本次包含的内容见 [变更记录](CHANGELOG.md)。
+
 ## 先运行两个 Host
 
 贡献工具链固定为 **Rust 1.97.1**，由 [rust-toolchain.toml](rust-toolchain.toml) 选择。
