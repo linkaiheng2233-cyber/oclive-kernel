@@ -24,12 +24,23 @@ unbound. The character Host selects two materials, and the non-character Host se
 Their LLM is a deterministic substitute: no inference, network or external effect occurs.
 The synthetic portrait reference is neither opened nor rendered.
 
-The six contracts cover retrieval, expressed emotion analysis, described-event analysis, prompt
-assembly, text generation and delegated work reporting. Each returns a local boxed future.
-See the [traits](crates/oclive_kernel_base/src/slot_base.rs) for exact call semantics;
-this brief introduction does not replace that specification.
+## The six slots
 
-## Character profile and integration
+| Base | Responsibility for this call | Normal result type |
+|---|---|---|
+| Memory | Retrieve relevant content from explicit candidate material | `Vec<String>` |
+| Emotion | Analyze the emotion expressed in the material | `Option<String>` |
+| Event | Analyze a described event's meaning or possible impact | `Option<String>` |
+| Prompt | Organize material according to this call's requirements | `String` |
+| LLM | Generate text from input already prepared by the caller | `String` |
+| Agent | Process a delegated task and report its outcome in text | `String` |
+
+Each method returns a local boxed future containing a `Result`, usable through `dyn`. A normal
+result may be empty; failures use `BaseCallError`. A capability return does not by itself end an
+invocation or authorize an external operation. Exact semantics remain in the
+[traits](crates/oclive_kernel_base/src/slot_base.rs) and [request/failure definitions](crates/oclive_kernel_base/src/requests.rs).
+
+## Character profile
 
 `character-profile` is on by default. It carries nonblank persona text and at least one nonblank
 visual reference. **Seven images are recommended; one remains sufficient.** The Host resolves
@@ -39,8 +50,19 @@ Canonical names live in `character_profile`; the old `minimal_role` module and s
 aliases of the same definitions. JSON/content rules and diagnostic wording are preserved;
 the canonical type name changes derived Debug/type-name output.
 
+## Integrating your own program
+
 Pin a reviewed, remotely available full Git commit SHA when depending on `oclive_kernel_base`.
-Set `default-features = false` for Base-only use, or explicitly opt in to `character-profile`.
+The following `rev` is a placeholder that must be replaced before use:
+
+```toml
+[dependencies]
+oclive_kernel_base = { git = "https://github.com/linkaiheng2233-cyber/oclive-kernel", rev = "<reviewed-40-character-commit-sha>", default-features = false }
+```
+
+This selects Base-only use. To include the profile, remove `default-features = false`, or add
+`features = ["character-profile"]` to opt in explicitly. Original OCLive's legacy re-exports are
+maintained in that workspace; local absolute paths are not a distribution dependency.
 Feature requests are additive: another selected dependency can enable the profile.
 Run off-mode checks separately from the whole workspace, whose character Host enables defaults.
 
@@ -56,12 +78,18 @@ you already have an async task. Read [local future integration](docs/local-futur
 
 ## Limits and verification
 
-No `Send`/`Sync`/`'static` bound is required by Base. Erased futures do not preserve a concrete
-future's possible `Send` property. Dropping a future proves neither physical cancellation nor
-rollback. There is no automatic retry, authorization engine, media loader or stable binary ABI.
-`BaseCallError.detail` is caller-supplied display text; Hosts must redact it where necessary.
+| Area | Boundary to account for |
+|---|---|
+| Threads and borrowing | Base does not require `Send`/`Sync`/`'static`; erased futures have no `Send` guarantee and cannot be passed directly to tasks that require it |
+| Allocation and dispatch | Boxed futures/dynamic dispatch have allocation and indirection costs in the general case; there is no zero-allocation guarantee |
+| Cancellation and retries | Dropping a future does not prove physical cancellation or rollback; the library supplies no automatic retry protocol |
+| Authority and flow | The Host owns resource access and call organization; returned text does not grant authority, commit state or establish product success |
+| Error display | Profile parse diagnostics omit supplied values; `BaseCallError.detail` is caller-supplied text that Hosts must redact before exposure where necessary |
+| Characters and media | The profile validates content, not asset existence, decoding or rendering; it is not a complete character-pack loader |
+| Compatibility and support | There is no stable binary ABI promise; toolchain, source compatibility and release policies are in CONTRIBUTING |
 
-The [Chinese landing page](README.md) has the six-slot and limitation tables and repository map.
+The complete responsibility specification stays in [boundary](docs/boundary.md).
+The [Chinese landing page](README.md) also provides a repository map.
 [CONTRIBUTING](CONTRIBUTING.md) lists full default/off/explicit-on verification commands.
 The repository lockfile reproduces source examples and CI; downstream applications own their locks.
 CI badges describe pushed commits, not unpublished local work or production-model acceptance.

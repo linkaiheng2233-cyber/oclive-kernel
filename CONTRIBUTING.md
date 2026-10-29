@@ -84,7 +84,9 @@ isolated harness or a separately approved downstream migration. Do not silently 
 
 Explain the problem, resulting behavior, meaningful checks, compatibility impact and untested boundaries.
 Update the owning documentation rather than copying a second normative specification. Keep Chinese and
-English entry points consistent; code documentation is English. Never include keys or private user material.
+English entry points consistent in their claims, slot summaries, integration instructions and limitations;
+they need not be sentence-for-sentence translations. Keep normative detail in the owning specification.
+Code documentation is English. Never include keys or private user material.
 Security reports follow [SECURITY](SECURITY.md), not a public issue.
 
 A local pass is **Locally verified**. Remote evidence must name the exact pushed commit and run;

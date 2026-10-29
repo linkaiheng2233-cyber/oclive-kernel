@@ -14,8 +14,8 @@ Historical checkpoint tags must keep their existing targets.
    Verify the two OS jobs and strict default/off docs; record the separately run dependency audit and
    advisory-fetch result. A parent SHA's badge is insufficient. Do not turn a failed advisory fetch into a pass.
 4. Confirm that About/topics describe code a visitor can actually obtain. Only then apply the metadata.
-5. Select a source-preview version/tag and keep its relationship to manifest versions explicit.
-   `v0.1.0-preview.1` is a possible prerelease naming pattern, not a tag created or a version decided by this file.
+5. The planned source-preview label is `v0.1.0-preview.1`; no tag or release is created by this plan.
+   Keep its relationship to manifest versions explicit before creating a distribution.
    If a matching package-version policy is selected, change and verify the manifests/lock before freezing.
    Do not force a `0.2.0` bump solely for the canonical rename that preserves source aliases.
 6. Review tag target and release text before creation. Mark a preview as prerelease. Do not publish to
