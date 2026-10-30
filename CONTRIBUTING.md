@@ -91,5 +91,4 @@ Security reports follow [SECURITY](SECURITY.md), not a public issue.
 
 A local pass is **Locally verified**. Remote evidence must name the exact pushed commit and run;
 an ancestor's green badge does not validate an unpublished child. Keep unrelated changes out of the PR.
-Release settings, tags and repository metadata are separate reviewed actions; use the
-[release-preparation checklist](docs/release-preparation.md). Preserve historical checkpoint tags.
+Release settings, tags and repository metadata are separate reviewed actions. Freeze the exact SHA, complete the applicable checks above, and verify the intended tag/prerelease against that SHA before announcing it. Preserve historical checkpoint tags; do not publish packages or alter downstream pins as a documentation cleanup side effect. One-time release drafts are kept outside source.
